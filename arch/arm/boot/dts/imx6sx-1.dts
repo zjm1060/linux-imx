@@ -1,0 +1,320 @@
+
+/dts-v1/;
+
+#include "imx6sx.dtsi"
+#include "imx6sx-board.dtsi"
+
+/ {
+    model = "i.MX6 SoloX Board";
+    compatible = "fsl,imx6sx-sdb", "fsl,imx6sx";
+
+	regulators {
+		compatible = "simple-bus";
+
+		wlan_en_reg: fixedregulator@1 {
+			compatible = "regulator-fixed";
+			regulator-name = "wlan-en-regulator";
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <1800000>;
+
+			/* WLAN_EN GPIO for this board - KEY_COL2  Bank2, pin12 */
+			gpio = <&gpio2 12 0>;
+			/* WLAN card specific delay */
+			startup-delay-us = <70000>;
+			enable-active-high;
+		};
+	};
+
+	kim {
+	        compatible = "kim";
+	        nshutdown_gpio = <49>;  // GPIO2_17 The wl8 driver expects gpio to be an integer, so gpio2_17 is (2-1)*32+17=49
+	        dev_name = "/dev/ttymxc2";
+	        flow_cntrl = <1>;
+	        baud_rate = <921600>;
+	};
+
+	reserved-memory {
+
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		/* Reserved 8Mb for M4 */
+		m4_memory:  m4@0x84000000 {
+			no-map;
+			reg = <0x84000000 0x00800000>;
+		};
+
+		/* Reserved 1Mb for MCC */
+		mcc_memory:  m4@0xBFF00000 {
+			no-map;
+			reg = <0xBFF00000 0x00100000>;
+		};
+	};
+
+	// memory {
+	// 	linux,usable-memory = <0x80000000 0x1ff00000>,
+	// 			<0xa0000000 0x1ff00000>,
+	// 			<0xc0000000 0x40000000>;
+	// };
+};
+
+&ocram {
+	reg = <0x00901000 0x1E000>;
+};
+
+&ocram {
+	reg = <0x00901000 0xf000>;
+};
+
+&rpmsg{	
+	vdev-nums = <1>;
+	reg = <0xbfff0000 0x10000>;
+	status = "okay";
+};
+
+&clks {
+	fsl,shared-clks-number = <0x23>;
+	fsl,shared-clks-index = <IMX6SX_CLK_PLL2_BUS IMX6SX_CLK_PLL2_PFD0
+			IMX6SX_CLK_PLL2_PFD2 IMX6SX_CLK_PLL3_USB_OTG
+			IMX6SX_CLK_PLL3_PFD1 IMX6SX_CLK_PLL3_PFD2
+			IMX6SX_CLK_PLL3_PFD3 IMX6SX_CLK_PLL4_AUDIO
+			IMX6SX_CLK_PLL5_VIDEO
+			IMX6SX_CLK_OCRAM IMX6SX_CLK_CAN1_SERIAL
+			IMX6SX_CLK_CAN1_IPG IMX6SX_CLK_CAN2_SERIAL
+			IMX6SX_CLK_CAN2_IPG IMX6SX_CLK_CANFD
+			IMX6SX_CLK_ECSPI1 IMX6SX_CLK_ECSPI2
+			IMX6SX_CLK_ECSPI3 IMX6SX_CLK_ECSPI4
+			IMX6SX_CLK_ECSPI5 IMX6SX_CLK_QSPI1
+			IMX6SX_CLK_QSPI2 IMX6SX_CLK_SSI1
+			IMX6SX_CLK_SSI2 IMX6SX_CLK_SSI3
+			IMX6SX_CLK_UART_SERIAL IMX6SX_CLK_UART_IPG
+			IMX6SX_CLK_PERIPH_CLK2_SEL IMX6SX_CLK_DUMMY
+			IMX6SX_CLK_I2C1 IMX6SX_CLK_I2C2
+			IMX6SX_CLK_I2C3 IMX6SX_CLK_I2C4
+			IMX6SX_CLK_EPIT1 IMX6SX_CLK_EPIT2>;
+	fsl,shared-mem-addr = <0x91F000>;
+	fsl,shared-mem-size = <0x1000>;
+};
+
+&cpu0 {
+   	operating-points = <
+		/* kHz    uV */
+		996000  1250000
+		792000  1175000
+		396000  1175000
+		198000	1175000
+		>;
+	fsl,soc-operating-points = <
+		/* ARM kHz      SOC uV */
+		996000	1250000
+		792000	1175000
+		396000	1175000
+		198000	1175000
+	>;
+	arm-supply = <&sw1a_reg>;
+	soc-supply = <&sw1a_reg>;
+	fsl,arm-soc-shared = <1>; 
+};
+
+&i2c1 {
+	clock-frequency = <100000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_i2c1>;
+	status = "okay";
+	pmic: pfuze3000@08 {
+		compatible = "fsl,pfuze3000";
+		reg = <0x08>;
+
+		regulators {
+			sw1a_reg: sw1a {
+				regulator-min-microvolt = <700000>;
+				regulator-max-microvolt = <1475000>;
+				regulator-boot-on;
+				regulator-always-on;
+				regulator-ramp-delay = <6250>;
+			};
+
+			/* use sw1c_reg to align with pfuze100/pfuze200 */
+			sw1c_reg: sw1b {
+				regulator-min-microvolt = <700000>;
+				regulator-max-microvolt = <1475000>;
+				regulator-boot-on;
+				regulator-always-on;
+				regulator-ramp-delay = <6250>;
+			};
+
+			sw2_reg: sw2 {
+				regulator-min-microvolt = <1500000>;
+				regulator-max-microvolt = <1850000>;
+				regulator-boot-on;
+				regulator-always-on;
+			};
+
+			sw3a_reg: sw3 {
+				regulator-min-microvolt = <900000>;
+				regulator-max-microvolt = <1650000>;
+				regulator-boot-on;
+				regulator-always-on;
+			};
+
+			swbst_reg: swbst {
+				regulator-min-microvolt = <5000000>;
+				regulator-max-microvolt = <5150000>;
+			};
+
+			snvs_reg: vsnvs {
+				regulator-min-microvolt = <1000000>;
+				regulator-max-microvolt = <3000000>;
+				regulator-boot-on;
+				regulator-always-on;
+			};
+
+			vref_reg: vrefddr {
+				regulator-boot-on;
+				regulator-always-on;
+			};
+
+			vgen1_reg: vldo1 {
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-always-on;
+			};
+
+			vgen2_reg: vldo2 {
+				regulator-min-microvolt = <800000>;
+				regulator-max-microvolt = <1550000>;
+			};
+
+			vgen3_reg: vccsd {
+				regulator-min-microvolt = <2850000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-always-on;
+			};
+
+			vgen4_reg: v33 {
+				regulator-min-microvolt = <2850000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-always-on;
+			};
+
+			vgen5_reg: vldo3 {
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-always-on;
+			};
+
+			vgen6_reg: vldo4 {
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-always-on;
+			};
+		};
+	};
+};
+
+&fec1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_enet1 &pinctrl_enet1_clkout>;
+	phy-reset-gpios = <&gpio2 1 GPIO_ACTIVE_HIGH>;
+	phy-mode = "rmii";
+	fsl,num_tx_queues=<3>;
+	fsl,num_rx_queues=<3>;
+	status = "okay";
+};
+
+
+&usdhc2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_usdhc1>;
+	no-1-8-v;
+	bus-width = <4>;
+	keep-power-in-suspend;
+	enable-sdio-wakeup;
+	status = "okay";
+};
+
+&uart1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_uart1>;
+	status = "okay";
+};
+
+&uart3 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_uart3>;
+	status = "okay";
+};
+
+&i2c3 {
+	clock-frequency = <100000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_i2c3>;
+	status = "okay";
+	
+	tda19988: tda19988@34 {
+		compatible = "udoo,tda19988";
+		reg = <0x34>;
+		status = "okay";
+	};
+};
+
+&lcdif1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_lcdif1>;
+	display = <&display0>;
+	status = "okay";
+
+	display0: display {
+		bits-per-pixel = <32>;
+		bus-width = <24>;
+
+		display-timings {
+			native-mode = <&timing0>;
+			timing0: timing0 {
+				clock-frequency = <74250000>;
+				hactive = <1280>;
+				vactive = <720>;
+				hback-porch = <220>; 
+				hfront-porch = <110>;
+				vback-porch = <20>;
+				vfront-porch = <5>;
+				hsync-len = <40>;
+				vsync-len = <5>;
+				
+				hsync-active = <0>;
+				vsync-active = <1>;
+				de-active = <1>;
+				pixelclk-active = <0>;
+			};
+		};
+	};
+};
+
+&dcic1 {
+	dcic_id = <0>;
+	dcic_mux = "dcic-lcdif1";
+	status = "okay";
+};
+
+&usdhc3 { /* WiFi */
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_usdhc3>;
+	enable-sdio-wakeup;
+	bus-width = <4>;
+	non-removable;	// non-removable is not a variable, the fact it is listed is all that is used by driver
+	vmmc-supply = <&wlan_en_reg>;
+	cap-power-off-card;
+	keep-power-in-suspend;
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+	wlcore: wlcore@0 {
+		compatible = "ti,wl1831";
+		reg = <2>;
+		interrupt-parent = <&gpio2>;
+		interrupts = <16 IRQ_TYPE_EDGE_RISING>;
+		ref-clock-frequency = <38400000>;
+		tcxo-clock-frequency = <26000000>;
+	};
+};

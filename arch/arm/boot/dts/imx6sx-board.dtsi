@@ -1,0 +1,308 @@
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+!!GlobalInfo
+product: Pins v3.0
+processor: MCIMX6XxxVM
+package_id: MCIMX6X4EVM10AB
+mcu_data: i_mx_1_0
+processor_version: 2.0.0
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+
+// /dts-v1/;
+
+#include "skeleton.dtsi"
+#include "imx6sx-pinfunc.h"
+
+// / {
+//     model = "Freescale i.MX 6SoloX User Board";
+//     compatible = "fsl,imx6sx-board", "fsl,imx6sx";
+
+//     soc {
+//         #address-cells = <1>;
+//         #size-cells = <1>;
+
+//         iomuxc: iomuxc@020e0000 {
+//             compatible = "fsl,imx6sx-iomuxc";
+//             reg = <0x020e0000 0x4000>;
+//         };
+//     };
+// };
+
+&iomuxc {
+    pinctrl-names = "default";
+    pinctrl-0 = <&pinctrl_gpios>;
+
+    imx6sx-board {
+
+        pinctrl_gpios: pinctrl_gpiosgrp {                  /*!< Function assigned for the core: Cortex-A9[ca9] */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+pinctrl_gpios:
+- options: {coreID: ca9}
+- pin_list:
+  - {pin_num: C7, peripheral: GPIO2, signal: 'io, 1', pin_signal: ENET1_CRS}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+            fsl,pins = <
+                MX6SX_PAD_ENET1_CRS__GPIO2_IO_1            0x000010B0
+            >;
+        };
+
+
+        pinctrl_uart1: pinctrl_uart1grp {                  /*!< Function assigned for the core: Cortex-A9[ca9] */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+pinctrl_uart1:
+- options: {callFromInitBoot: 'true', coreID: ca9}
+- pin_list:
+  - {pin_num: B19, peripheral: UART1, signal: rx, pin_signal: GPIO1_IO05, SPEED: OHM_50}
+  - {pin_num: A19, peripheral: UART1, signal: tx, pin_signal: GPIO1_IO04, SPEED: OHM_50}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+            fsl,pins = <
+                MX6SX_PAD_GPIO1_IO04__UART1_TX             0x00001030
+                MX6SX_PAD_GPIO1_IO05__UART1_RX             0x00001030
+            >;
+        };
+
+
+        pinctrl_usdhc1: pinctrl_usdhc1grp {                /*!< Function assigned for the core: Cortex-A9[ca9] */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+pinctrl_usdhc1:
+- options: {coreID: ca9}
+- pin_list:
+  - {pin_num: F12, peripheral: uSDHC2, signal: clk, pin_signal: SD2_CLK}
+  - {pin_num: F11, peripheral: uSDHC2, signal: cmd, pin_signal: SD2_CMD}
+  - {pin_num: G13, peripheral: uSDHC2, signal: data0, pin_signal: SD2_DATA0}
+  - {pin_num: F13, peripheral: uSDHC2, signal: data1, pin_signal: SD2_DATA1}
+  - {pin_num: F10, peripheral: uSDHC2, signal: data2, pin_signal: SD2_DATA2}
+  - {pin_num: G10, peripheral: uSDHC2, signal: data3, pin_signal: SD2_DATA3}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+            fsl,pins = <
+                MX6SX_PAD_SD2_CLK__USDHC2_CLK              0x000010B0
+                MX6SX_PAD_SD2_CMD__USDHC2_CMD              0x000010B0
+                MX6SX_PAD_SD2_DATA0__USDHC2_DATA0          0x000010B0
+                MX6SX_PAD_SD2_DATA1__USDHC2_DATA1          0x000010B0
+                MX6SX_PAD_SD2_DATA2__USDHC2_DATA2          0x000010B0
+                MX6SX_PAD_SD2_DATA3__USDHC2_DATA3          0x000010B0
+            >;
+        };
+
+
+        pinctrl_enet1: pinctrl_enet1grp {                  /*!< Function assigned for the core: Cortex-A9[ca9] */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+pinctrl_enet1:
+- options: {coreID: ca9}
+- pin_list:
+  - {pin_num: E7, peripheral: ENET1, signal: mdio, pin_signal: ENET1_MDIO, PUS: OHM_100K_PU, PUE: PULL, PKE: DISABLED, SRE: FAST}
+  - {pin_num: F9, peripheral: ENET1, signal: mdc, pin_signal: ENET1_MDC, SION: DISABLED, HYS: DISABLED, PUS: OHM_100K_PU, PUE: PULL, PKE: DISABLED, ODE: DISABLED,
+    SRE: FAST}
+  - {pin_num: C12, peripheral: ENET1, signal: 'tx_data, 0', pin_signal: RGMII1_TD0, PUS: OHM_100K_PU, PUE: PULL, PKE: DISABLED, SRE: FAST}
+  - {pin_num: D12, peripheral: ENET1, signal: 'tx_data, 1', pin_signal: RGMII1_TD1, PUS: OHM_100K_PU, PUE: PULL, PKE: DISABLED, SRE: FAST}
+  - {pin_num: C10, peripheral: ENET1, signal: tx_en, pin_signal: RGMII1_TX_CTL, PUS: OHM_100K_PU, PUE: PULL, PKE: DISABLED, SRE: FAST}
+  - {pin_num: D10, peripheral: ENET1, signal: rx_er, pin_signal: RGMII1_RXC, PUE: PULL, SRE: FAST}
+  - {pin_num: A7, peripheral: ENET1, signal: ref_clk1, pin_signal: ENET1_TX_CLK, PUE: PULL, DSE: HIZ, SRE: FAST}
+  - {pin_num: D8, peripheral: ENET1, signal: 'rx_data, 0', pin_signal: RGMII1_RD0, PUE: PULL, DSE: HIZ, SRE: FAST}
+  - {pin_num: E9, peripheral: ENET1, signal: 'rx_data, 1', pin_signal: RGMII1_RD1, PUE: PULL, DSE: HIZ, SRE: FAST}
+  - {pin_num: E10, peripheral: ENET1, signal: rx_en, pin_signal: RGMII1_RX_CTL, PUE: PULL, DSE: HIZ, SRE: FAST}
+  - {pin_num: C6, peripheral: GPIO2, signal: 'io, 9', pin_signal: ENET2_TX_CLK, PUE: PULL, ODE: DISABLED, SPEED: OHM_100_, DSE: HIZ, SRE: FAST}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+            fsl,pins = <
+                MX6SX_PAD_ENET1_MDC__ENET1_MDC             0x0000A0B1
+                MX6SX_PAD_ENET1_MDIO__ENET1_MDIO           0x0000A0B1
+                MX6SX_PAD_ENET1_TX_CLK__ENET1_REF_CLK1     0x00003081
+                MX6SX_PAD_ENET2_TX_CLK__GPIO2_IO_9         0x00003081
+                MX6SX_PAD_RGMII1_RD0__ENET1_RX_DATA_0      0x00003081
+                MX6SX_PAD_RGMII1_RD1__ENET1_RX_DATA_1      0x00003081
+                MX6SX_PAD_RGMII1_RXC__ENET1_RX_ER          0x000030B1
+                MX6SX_PAD_RGMII1_RX_CTL__ENET1_RX_EN       0x00003081
+                MX6SX_PAD_RGMII1_TD0__ENET1_TX_DATA_0      0x0000A0B1
+                MX6SX_PAD_RGMII1_TD1__ENET1_TX_DATA_1      0x0000A0B1
+                MX6SX_PAD_RGMII1_TX_CTL__ENET1_TX_EN       0x0000A0B1
+            >;
+        };
+
+
+        pinctrl_enet1_clkout: pinctrl_enet1_clkoutgrp {    /*!< Function assigned for the core: Cortex-A9[ca9] */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+pinctrl_enet1_clkout:
+- options: {coreID: ca9}
+- pin_list:
+  - {pin_num: D5, peripheral: ENET2, signal: ref_clk_25m, pin_signal: ENET2_RX_CLK, PKE: DISABLED, ODE: DISABLED, SPEED: OHM_100_, DSE: OHM_130, SRE: FAST}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+            fsl,pins = <
+                MX6SX_PAD_ENET2_RX_CLK__ENET2_REF_CLK_25M  0x00000091
+            >;
+        };
+
+
+        pinctrl_lcdif1: pinctrl_lcdif1grp {                /*!< Function assigned for the core: Cortex-A9[ca9] */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+pinctrl_lcdif1:
+- options: {coreID: ca9}
+- pin_list:
+  - {pin_num: J23, peripheral: LCDIF1, signal: 'data, 0', pin_signal: LCD1_DATA00, SION: DISABLED, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: J22, peripheral: LCDIF1, signal: 'data, 1', pin_signal: LCD1_DATA01, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: K20, peripheral: LCDIF1, signal: 'data, 2', pin_signal: LCD1_DATA02, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: K19, peripheral: LCDIF1, signal: 'data, 3', pin_signal: LCD1_DATA03, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: K18, peripheral: LCDIF1, signal: 'data, 4', pin_signal: LCD1_DATA04, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: J18, peripheral: LCDIF1, signal: 'data, 6', pin_signal: LCD1_DATA06, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: J19, peripheral: LCDIF1, signal: 'data, 5', pin_signal: LCD1_DATA05, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: H23, peripheral: LCDIF1, signal: 'data, 7', pin_signal: LCD1_DATA07, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: H22, peripheral: LCDIF1, signal: 'data, 8', pin_signal: LCD1_DATA08, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: H20, peripheral: LCDIF1, signal: 'data, 9', pin_signal: LCD1_DATA09, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: H19, peripheral: LCDIF1, signal: 'data, 10', pin_signal: LCD1_DATA10, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: H18, peripheral: LCDIF1, signal: 'data, 11', pin_signal: LCD1_DATA11, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: G23, peripheral: LCDIF1, signal: 'data, 12', pin_signal: LCD1_DATA12, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: G22, peripheral: LCDIF1, signal: 'data, 13', pin_signal: LCD1_DATA13, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: G21, peripheral: LCDIF1, signal: 'data, 14', pin_signal: LCD1_DATA14, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: G19, peripheral: LCDIF1, signal: 'data, 15', pin_signal: LCD1_DATA15, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: G18, peripheral: LCDIF1, signal: 'data, 16', pin_signal: LCD1_DATA16, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: F23, peripheral: LCDIF1, signal: 'data, 17', pin_signal: LCD1_DATA17, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: F22, peripheral: LCDIF1, signal: 'data, 18', pin_signal: LCD1_DATA18, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: F21, peripheral: LCDIF1, signal: 'data, 19', pin_signal: LCD1_DATA19, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: G20, peripheral: LCDIF1, signal: 'data, 20', pin_signal: LCD1_DATA20, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: F19, peripheral: LCDIF1, signal: 'data, 21', pin_signal: LCD1_DATA21, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: F18, peripheral: LCDIF1, signal: 'data, 22', pin_signal: LCD1_DATA22, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: E20, peripheral: LCDIF1, signal: 'data, 23', pin_signal: LCD1_DATA23, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: H21, peripheral: LCDIF1, signal: clk, pin_signal: LCD1_CLK, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: E21, peripheral: LCDIF1, signal: enable, pin_signal: LCD1_ENABLE, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: E23, peripheral: LCDIF1, signal: vsync, pin_signal: LCD1_VSYNC, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: D23, peripheral: LCDIF1, signal: hsync, pin_signal: LCD1_HSYNC, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL}
+  - {pin_num: E22, peripheral: GPIO3, signal: 'io, 27', pin_signal: LCD1_RESET, PKE: DISABLED, SPEED: OHM_50, DSE: HIZ}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+            fsl,pins = <
+                MX6SX_PAD_LCD1_CLK__LCDIF1_CLK             0x0001B0B0
+                MX6SX_PAD_LCD1_DATA00__LCDIF1_DATA_0       0x0001B0B0
+                MX6SX_PAD_LCD1_DATA01__LCDIF1_DATA_1       0x0001B0B0
+                MX6SX_PAD_LCD1_DATA02__LCDIF1_DATA_2       0x0001B0B0
+                MX6SX_PAD_LCD1_DATA03__LCDIF1_DATA_3       0x0001B0B0
+                MX6SX_PAD_LCD1_DATA04__LCDIF1_DATA_4       0x0001B0B0
+                MX6SX_PAD_LCD1_DATA05__LCDIF1_DATA_5       0x0001B0B0
+                MX6SX_PAD_LCD1_DATA06__LCDIF1_DATA_6       0x0001B0B0
+                MX6SX_PAD_LCD1_DATA07__LCDIF1_DATA_7       0x0001B0B0
+                MX6SX_PAD_LCD1_DATA08__LCDIF1_DATA_8       0x0001B0B0
+                MX6SX_PAD_LCD1_DATA09__LCDIF1_DATA_9       0x0001B0B0
+                MX6SX_PAD_LCD1_DATA10__LCDIF1_DATA_10      0x0001B0B0
+                MX6SX_PAD_LCD1_DATA11__LCDIF1_DATA_11      0x0001B0B0
+                MX6SX_PAD_LCD1_DATA12__LCDIF1_DATA_12      0x0001B0B0
+                MX6SX_PAD_LCD1_DATA13__LCDIF1_DATA_13      0x0001B0B0
+                MX6SX_PAD_LCD1_DATA14__LCDIF1_DATA_14      0x0001B0B0
+                MX6SX_PAD_LCD1_DATA15__LCDIF1_DATA_15      0x0001B0B0
+                MX6SX_PAD_LCD1_DATA16__LCDIF1_DATA_16      0x0001B0B0
+                MX6SX_PAD_LCD1_DATA17__LCDIF1_DATA_17      0x0001B0B0
+                MX6SX_PAD_LCD1_DATA18__LCDIF1_DATA_18      0x0001B0B0
+                MX6SX_PAD_LCD1_DATA19__LCDIF1_DATA_19      0x0001B0B0
+                MX6SX_PAD_LCD1_DATA20__LCDIF1_DATA_20      0x0001B0B0
+                MX6SX_PAD_LCD1_DATA21__LCDIF1_DATA_21      0x0001B0B0
+                MX6SX_PAD_LCD1_DATA22__LCDIF1_DATA_22      0x0001B0B0
+                MX6SX_PAD_LCD1_DATA23__LCDIF1_DATA_23      0x0001B0B0
+                MX6SX_PAD_LCD1_ENABLE__LCDIF1_ENABLE       0x0001B0B0
+                MX6SX_PAD_LCD1_HSYNC__LCDIF1_HSYNC         0x0001B0B0
+                MX6SX_PAD_LCD1_RESET__GPIO3_IO_27          0x00000000
+                MX6SX_PAD_LCD1_VSYNC__LCDIF1_VSYNC         0x0001B0B0
+            >;
+        };
+
+
+        pinctrl_i2c1: pinctrl_i2c1grp {                    /*!< Function assigned for the core: Cortex-A9[ca9] */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+pinctrl_i2c1:
+- options: {coreID: ca9}
+- pin_list:
+  - {pin_num: A20, peripheral: I2C1, signal: scl, pin_signal: GPIO1_IO00, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL, ODE: ENABLED, SRE: FAST}
+  - {pin_num: B20, peripheral: I2C1, signal: sda, pin_signal: GPIO1_IO01, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL, ODE: ENABLED, SRE: FAST}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+            fsl,pins = <
+                MX6SX_PAD_GPIO1_IO00__I2C1_SCL             0x4001B8B1
+                MX6SX_PAD_GPIO1_IO01__I2C1_SDA             0x4001B8B1
+            >;
+        };
+
+
+        pinctrl_i2c3: pinctrl_i2c3grp {                    /*!< Function assigned for the core: Cortex-A9[ca9] */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+pinctrl_i2c3:
+- options: {coreID: ca9}
+- pin_list:
+  - {pin_num: A22, peripheral: I2C3, signal: scl, pin_signal: KEY_COL4, SION: ENABLED, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL, ODE: ENABLED, SRE: FAST}
+  - {pin_num: D22, peripheral: I2C3, signal: sda, pin_signal: KEY_ROW4, SION: ENABLED, HYS: ENABLED, PUS: OHM_100K_PU, PUE: PULL, ODE: ENABLED, SRE: FAST}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+            fsl,pins = <
+                MX6SX_PAD_KEY_COL4__I2C3_SCL               0x4001B8B1
+                MX6SX_PAD_KEY_ROW4__I2C3_SDA               0x4001B8B1
+            >;
+        };
+
+
+        pinctrl_usdhc3: pinctrl_usdhc3grp {                /*!< Function assigned for the core: Cortex-A9[ca9] */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+pinctrl_usdhc3:
+- options: {coreID: ca9}
+- pin_list:
+  - {pin_num: W13, peripheral: uSDHC3, signal: cmd, pin_signal: SD3_CMD, LVE: DISABLED, HYS: ENABLED, PUS: OHM_47K_PU, ODE: DISABLED, SPEED: OHM_100, DSE: OHM_52,
+    SRE: FAST}
+  - {pin_num: Y12, peripheral: uSDHC3, signal: clk, pin_signal: SD3_CLK, HYS: ENABLED, PUE: KEEP, PKE: DISABLED, SPEED: OHM_100, DSE: OHM_52, SRE: FAST}
+  - {pin_num: AA11, peripheral: uSDHC3, signal: data0, pin_signal: SD3_DATA0, HYS: ENABLED, PUS: OHM_47K_PU, SPEED: OHM_100, DSE: OHM_52, SRE: FAST}
+  - {pin_num: W10, peripheral: uSDHC3, signal: data1, pin_signal: SD3_DATA1, HYS: ENABLED, PUS: OHM_47K_PU, SPEED: OHM_100, DSE: OHM_52, SRE: FAST}
+  - {pin_num: AA15, peripheral: uSDHC3, signal: data2, pin_signal: SD3_DATA2, HYS: ENABLED, PUS: OHM_47K_PU, SPEED: OHM_100, DSE: OHM_52, SRE: FAST}
+  - {pin_num: Y14, peripheral: uSDHC3, signal: data3, pin_signal: SD3_DATA3, HYS: ENABLED, PUS: OHM_47K_PU, SPEED: OHM_100, DSE: OHM_52, SRE: FAST}
+  - {pin_num: B23, peripheral: GPIO2, signal: 'io, 12', pin_signal: KEY_COL2, HYS: ENABLED, PUS: OHM_47K_PU, PKE: ENABLED, SPEED: OHM_100, DSE: OHM_88, SRE: FAST}
+  - {pin_num: B21, peripheral: GPIO2, signal: 'io, 16', pin_signal: KEY_ROW1, HYS: ENABLED, PUS: OHM_100K_PD, PUE: PULL, SPEED: OHM_100, DSE: OHM_88, SRE: FAST}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+            fsl,pins = <
+                MX6SX_PAD_KEY_COL2__GPIO2_IO_12            0x00015059
+                MX6SX_PAD_KEY_ROW1__GPIO2_IO_16            0x00013059
+                MX6SX_PAD_SD3_CLK__USDHC3_CLK              0x00010069
+                MX6SX_PAD_SD3_CMD__USDHC3_CMD              0x00017069
+                MX6SX_PAD_SD3_DATA0__USDHC3_DATA0          0x00017069
+                MX6SX_PAD_SD3_DATA1__USDHC3_DATA1          0x00017069
+                MX6SX_PAD_SD3_DATA2__USDHC3_DATA2          0x00017069
+                MX6SX_PAD_SD3_DATA3__USDHC3_DATA3          0x00017069
+            >;
+        };
+
+        pinctrl_uart3: pinctrl_uart3grp {                  /*!< Function assigned for the core: Cortex-A9[ca9] */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+pinctrl_uart3:
+- options: {coreID: ca9}
+- pin_list:
+  - {pin_num: AA12, peripheral: UART3, signal: cts_b, pin_signal: SD3_DATA6, HYS: ENABLED, SPEED: OHM_100, DSE: OHM_88, SRE: FAST}
+  - {pin_num: W11, peripheral: UART3, signal: rts_b, pin_signal: SD3_DATA7, HYS: ENABLED, SPEED: OHM_100, DSE: OHM_88, SRE: FAST}
+  - {pin_num: AA14, peripheral: UART3, signal: rx, pin_signal: SD3_DATA4, HYS: ENABLED, SPEED: OHM_100, DSE: OHM_88, SRE: FAST}
+  - {pin_num: AA13, peripheral: UART3, signal: tx, pin_signal: SD3_DATA5, LVE: DISABLED, HYS: ENABLED, SPEED: OHM_100, DSE: OHM_88, SRE: FAST}
+  - {pin_num: R19, peripheral: XTALOSC, signal: 32k_out, pin_signal: CSI_MCLK, HYS: ENABLED, PUS: OHM_100K_PD, PUE: KEEP, PKE: DISABLED, ODE: DISABLED, SPEED: OHM_100,
+    DSE: OHM_88, SRE: FAST}
+  - {pin_num: C21, peripheral: GPIO2, signal: 'io, 17', pin_signal: KEY_ROW2, HYS: ENABLED, PUS: OHM_47K_PU, PUE: KEEP, PKE: ENABLED, ODE: DISABLED, SPEED: OHM_100,
+    DSE: OHM_88, SRE: FAST}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+            fsl,pins = <
+                MX6SX_PAD_CSI_MCLK__ANATOP_32K_OUT         0x00010059
+                MX6SX_PAD_KEY_ROW2__GPIO2_IO_17            0x00015059
+                MX6SX_PAD_SD3_DATA4__UART3_RX              0x00013059
+                MX6SX_PAD_SD3_DATA5__UART3_TX              0x00013059
+                MX6SX_PAD_SD3_DATA6__UART3_RTS_B           0x00013059
+                MX6SX_PAD_SD3_DATA7__UART3_CTS_B           0x00013059
+            >;
+        };
+
+    };
+};
+
